@@ -1,10 +1,10 @@
-C51 COMPILER V9.56.0.0   USART                                                             05/28/2018 11:08:19 PAGE 1   
+C51 COMPILER V9.56.0.0   USART                                                             05/28/2018 15:14:30 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE USART
 OBJECT MODULE PLACED IN .\Objects\USART.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE USART\USART.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
-                    -gs\USART.lst) TABS(2) OBJECT(.\Objects\USART.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE USART\USART.c COMPACT OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\Listings\USART.lst) TABS(2) OBJECT(.\Objects\USART.obj)
 
 line level    source
 
@@ -39,31 +39,38 @@ line level    source
   29   2         }   
   30   1      }
   31          
-  32          /************************串口1中断函数***********************/
-  33          void UART1_Routine() interrupt 4
-  34          {
-  35   1        
-  36   1        if(RI==1)
-  37   1        {
-  38   2          RI = 0;
-  39   2        }
-  40   1        
-  41   1      }
-  42          
-  43          
-  44          
-  45          
+  32          void SendData(char dat)
+  33          {
+  34   1        SBUF=dat;
+  35   1        while(TI==0);
+  36   1        TI=0;
+  37   1      }
+  38          
+  39          /************************串口1中断函数***********************/
+  40          void UART1_Routine() interrupt 4
+  41          {
+  42   1        
+  43   1        if(RI==1)
+  44   1        {
+  45   2          RI = 0;
+  46   2        }
+  47   1        
+  48   1      }
+  49          
+  50          
+  51          
+  52          
 
+
+C51 COMPILER V9.56.0.0   USART                                                             05/28/2018 15:14:30 PAGE 2   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     64    ----
+   CODE SIZE        =     80    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       3
+   PDATA SIZE       =   ----       3
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
-C51 COMPILER V9.56.0.0   USART                                                             05/28/2018 11:08:19 PAGE 2   
-
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 

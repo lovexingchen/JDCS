@@ -29,6 +29,13 @@ void UartInit_fk(char *buf1)    //串口1发送函数
    }   
 }
 
+void SendData(char dat)
+{
+	SBUF=dat;
+  while(TI==0);
+	TI=0;
+}
+
 /************************串口1中断函数***********************/
 void UART1_Routine() interrupt 4
 {

@@ -1,10 +1,10 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              05/28/2018 11:09:02 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              05/28/2018 19:49:06 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\Objects\main.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
-                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c COMPACT OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
 
 line level    source
 
@@ -17,93 +17,103 @@ line level    source
    7          #include ".\DHT11\DHT11.h"
    8          #include ".\BH1750\BH1750.h"
    9          
-  10          char voltage[10],illumination[20];
-  11          char tem[10],hum[10];
+  10          sbit MD1 = P3^2;
+  11          sbit MD0 = P3^3;
   12          
-  13          void main()
-  14          { 
-  15   1      //  P3M0 |= 0X40;
-  16   1      //  P3M1 |= 0X00;
-  17   1        
-  18   1        
-  19   1        InitADC();
-  20   1        UartInit(); 
-  21   1        Init_BH1750();       //初始化BH1750
-  22   1        Delay1ms(1000);
-  23   1        
-  24   1        while(1) 
-  25   1        {   
-  26   2          Delay1ms(500);
-  27   2          UartInit_fk("即将进入掉电模式\r\n");
-  28   2          PCON = 0X02;  //单片机进入掉电模式
-  29   2          _nop_;
-*** WARNING C275 IN LINE 29 OF main.c: expression with possibly no effect
+  13          char voltage[10],illumination[20];
+  14          char tem[10],hum[10];
+  15          
+  16          void main()
+  17          { 
+  18   1        InitADC();
+  19   1        UartInit(); 
+  20   1        Init_BH1750();       //初始化BH1750
+  21   1        Delay1ms(1000);
+  22   1        
+  23   1        while(1) 
+  24   1        {   
+  25   2          Delay1ms(100);
+  26   2          MD1 = 1;
+  27   2          MD0 = 0;      
+  28   2          Delay1ms(100);
+  29   2          PCON = 0X02;  //单片机进入掉电模式
   30   2          _nop_;
 *** WARNING C275 IN LINE 30 OF main.c: expression with possibly no effect
   31   2          _nop_;
 *** WARNING C275 IN LINE 31 OF main.c: expression with possibly no effect
-  32   2          
-  33   2          /**************************************
-  34   2          查询DHT11数据
-  35   2          **************************************/
-  36   2          Delay1ms(500);
-  37   2          if(Dht11_ReadTemHumi() == 1)
-  38   2          {
-  39   3            sprintf(tem,"%d\r\n",temp_value);
-  40   3            sprintf(hum,"%d\r\n",humi_value);
-  41   3            UartInit_fk(tem);
-  42   3            UartInit_fk(hum);
-  43   3          }
-  44   2          else UartInit_fk("DHT11查询失败\r\n");
-  45   2          
-  46   2          /**************************************
-  47   2          查询ADC数据  电池电压
-  48   2          **************************************/
-  49   2          Delay1ms(500);
-  50   2          EADC = 1;     //为避免冲突在使用ADC时在开启中断   
-  51   2          sprintf(voltage,"%.3f\r\n",V);
-C51 COMPILER V9.56.0.0   MAIN                                                              05/28/2018 11:09:02 PAGE 2   
+  32   2          _nop_;
+*** WARNING C275 IN LINE 32 OF main.c: expression with possibly no effect
+  33   2          
+  34   2          /**************************************
+  35   2          查询DHT11数据
+  36   2          **************************************/
+  37   2          Delay1ms(100);
+  38   2          if(Dht11_ReadTemHumi() == 1)
+  39   2          {
+  40   3            sprintf(tem,"%d\r\n",temp_value);
+  41   3            sprintf(hum,"%d\r\n",humi_value);
+  42   3          }
+  43   2          /**************************************
+  44   2          查询ADC数据  电池电压
+  45   2          **************************************/
+  46   2          Delay1ms(100);
+  47   2          EADC = 1;     //为避免冲突在使用ADC时在开启中断   
+  48   2          sprintf(voltage,"%.3f\r\n",V);
+  49   2          EADC = 0;     //为避免冲突不使用ADC时在关闭中断 
+  50   2          
+  51   2          /**************************************
+C51 COMPILER V9.56.0.0   MAIN                                                              05/28/2018 19:49:06 PAGE 2   
 
-  52   2          UartInit_fk(voltage);
-  53   2          EADC = 0;     //为避免冲突不使用ADC时在关闭中断 
-  54   2          
-  55   2          /**************************************
-  56   2          查询BH1750数据 光照强度
-  57   2          **************************************/
-  58   2          Delay1ms(500);
-  59   2          Single_Write_BH1750(0x01);   // power on
-  60   2          Single_Write_BH1750(0x10);   // H- resolution mode
+  52   2          查询BH1750数据 光照强度
+  53   2          **************************************/
+  54   2          Delay1ms(100);
+  55   2          Single_Write_BH1750(0x01);   // power on
+  56   2          Single_Write_BH1750(0x10);   // H- resolution mode
+  57   2      
+  58   2          Delay1ms(180);              //延时180ms
+  59   2      
+  60   2          Multiple_Read_BH1750();       //连续读出数据，存储在BUF中
   61   2      
-  62   2          Delay1ms(180);              //延时180ms
-  63   2      
-  64   2          Multiple_Read_BH1750();       //连续读出数据，存储在BUF中
-  65   2      
-  66   2          dis_data=BUF[0];
-  67   2          dis_data=(dis_data<<8)+BUF[1];//合成数据，即光照数据   
-  68   2          temp=(float)dis_data/1.2;
-  69   2          sprintf(illumination,"%.3f\r\n",temp);
-  70   2          UartInit_fk(illumination);  
-  71   2          
-  72   2          if(V*2 < 6)
-  73   2          {
-  74   3            
-  75   3            //单片机进入休眠模式不在发送数据
-  76   3          }
-  77   2        }
-  78   1              
-  79   1      
-  80   1      }
-  81          
-  82          
-  83          
+  62   2          dis_data=BUF[0];
+  63   2          dis_data=(dis_data<<8)+BUF[1];//合成数据，即光照数据   
+  64   2          temp=(float)dis_data/1.2;
+  65   2          sprintf(illumination,"%.3f\r\n",temp);
+  66   2          
+  67   2          MD1 = 0;
+  68   2          MD0 = 0;  
+  69   2          Delay1ms(100); 
+  70   2          SendData(0X00);
+  71   2          SendData(0X02);
+  72   2          SendData(0X18);
+  73   2          UartInit_fk(tem);             //温度
+  74   2          UartInit_fk(hum);             //湿度
+  75   2          UartInit_fk(voltage);         //电池电压\2
+  76   2          UartInit_fk(illumination);    //光照强度
+  77   2          
+  78   2         
+  79   2          if(V*2 < 6)
+  80   2          {
+  81   3            PCON = 0X02;  //单片机进入掉电模式
+  82   3            ES=0;         //关闭所有中断 单片机不被唤醒
+  83   3            EA=0;
+  84   3            EADC = 0;
+  85   3            //单片机进入休眠模式不在发送数据
+  86   3          }
+  87   2        }
+  88   1              
+  89   1      
+  90   1      }
+  91          
+  92          
+  93          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    310    ----
-   CONSTANT SIZE    =     47    ----
+   CODE SIZE        =    407    ----
+   CONSTANT SIZE    =     12    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =     50    ----
+   PDATA SIZE       =     50    ----
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

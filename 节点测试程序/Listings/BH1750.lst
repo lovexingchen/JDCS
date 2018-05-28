@@ -1,10 +1,10 @@
-C51 COMPILER V9.56.0.0   BH1750                                                            05/28/2018 11:06:50 PAGE 1   
+C51 COMPILER V9.56.0.0   BH1750                                                            05/28/2018 14:23:13 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE BH1750
 OBJECT MODULE PLACED IN .\Objects\BH1750.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE BH1750\BH1750.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
-                    -ings\BH1750.lst) TABS(2) OBJECT(.\Objects\BH1750.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE BH1750\BH1750.c COMPACT OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRIN
+                    -T(.\Listings\BH1750.lst) TABS(2) OBJECT(.\Objects\BH1750.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          接收应答信号
   53          **************************************/
   54          bit BH1750_RecvACK()
-C51 COMPILER V9.56.0.0   BH1750                                                            05/28/2018 11:06:50 PAGE 2   
+C51 COMPILER V9.56.0.0   BH1750                                                            05/28/2018 14:23:13 PAGE 2   
 
   55          {
   56   1          SCL = 1;                    //拉高时钟线
@@ -126,7 +126,7 @@ line level    source
  114   1      }
  115          
  116          //********单字节读取*****************************************
-C51 COMPILER V9.56.0.0   BH1750                                                            05/28/2018 11:06:50 PAGE 3   
+C51 COMPILER V9.56.0.0   BH1750                                                            05/28/2018 14:23:13 PAGE 3   
 
  117          /*
  118          uchar Single_Read_BH1750(uchar REG_Address)
@@ -190,7 +190,7 @@ line level    source
  176          
  177          
  178          
-C51 COMPILER V9.56.0.0   BH1750                                                            05/28/2018 11:06:50 PAGE 4   
+C51 COMPILER V9.56.0.0   BH1750                                                            05/28/2018 14:23:13 PAGE 4   
 
  179          
  180          
@@ -198,11 +198,11 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    239    ----
+   CODE SIZE        =    262    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =     14       6
+   PDATA SIZE       =     14       6
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----       1
 END OF MODULE INFORMATION.

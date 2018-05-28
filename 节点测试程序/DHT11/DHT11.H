@@ -10,4 +10,5 @@ sbit dht11=P3^6;
 
 static unsigned char Dht11_ReadValue(void);
 extern unsigned char Dht11_ReadTemHumi(void);
+void SendData(char dat);
 #endif
