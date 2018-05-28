@@ -1,0 +1,59 @@
+C51 COMPILER V9.56.0.0   ADZH                                                              05/28/2018 07:53:27 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE ADZH
+OBJECT MODULE PLACED IN .\Objects\ADzh.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE AD\ADzh.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\A
+                    -Dzh.lst) TABS(2) OBJECT(.\Objects\ADzh.obj)
+
+line level    source
+
+   1          #include "ADzh.h"
+   2          #include ".\systick\systick.h"
+   3          
+   4          #define ADC_POWER  0X80
+   5          #define ADC_SPEEDLL 0X00
+   6          #define ADC_START 0X08
+   7          #define ADC_FLAG 0X10
+   8          
+   9          float V=0.0;
+  10          
+  11          void InitADC()
+  12          {
+  13   1          P1ASF=0X20;
+  14   1          ADC_RES=0;
+  15   1          ADC_CONTR=ADC_POWER|ADC_SPEEDLL|ADC_START|5;
+  16   1          Delay1ms(100);
+  17   1      }
+  18          
+  19          
+  20          void  adc_isr()  interrupt 5  using 1
+  21          {
+  22   1          ADC_CONTR&=!ADC_FLAG;
+  23   1          V=(ADC_RES*5.1)/256;  //实测电压值100倍
+  24   1      //    if(++ch>7)  ch=0;         //检查八位通道
+  25   1          ADC_CONTR=ADC_POWER|ADC_SPEEDLL|ADC_START|5;    
+  26   1      }
+  27          
+  28          
+  29          
+  30          
+  31          
+  32          
+  33          
+  34          
+  35          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     80    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

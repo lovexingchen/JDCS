@@ -1,0 +1,9 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\systick.obj",
+".\Objects\USART.obj",
+".\Objects\ADzh.obj",
+".\Objects\DHT11.obj",
+".\Objects\BH1750.obj" 
+TO ".\Objects\CS-GY" 
+PRINT(".\Listings\CS-GY.m51") RAMSIZE(256) 

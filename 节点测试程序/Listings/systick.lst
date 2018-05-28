@@ -1,0 +1,57 @@
+C51 COMPILER V9.56.0.0   SYSTICK                                                           05/28/2018 09:12:23 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE SYSTICK
+OBJECT MODULE PLACED IN .\Objects\systick.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE systick\systick.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Li
+                    -stings\systick.lst) TABS(2) OBJECT(.\Objects\systick.obj)
+
+line level    source
+
+   1          #include ".\systick\systick.h"
+   2          
+   3          
+   4          void Delay1ms(int n)    //@22.1184MHz
+   5          {
+   6   1        unsigned char i, j;
+   7   1        unsigned int k;
+   8   1        
+   9   1        for(k=0;k<n;k++)
+  10   1        {
+  11   2          _nop_();
+  12   2          _nop_();
+  13   2          i = 22;
+  14   2          j = 128;
+  15   2          do
+  16   2          {
+  17   3            while (--j);
+  18   3          } while (--i);
+  19   2        } 
+  20   1      }
+  21          
+  22          void Delay1us(char n)   //@22.1184MHz
+  23          {
+  24   1        unsigned char i;
+  25   1        unsigned int j;
+  26   1      
+  27   1        for(j=0;j<n;j++)
+  28   1        {
+  29   2          i = 3;
+  30   2          while (--i);
+  31   2        } 
+  32   1      }
+  33          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     56    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
